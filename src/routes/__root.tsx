@@ -1,0 +1,87 @@
+import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { DeadlineBanner } from "@/components/DeadlineBanner";
+import { Toaster } from "@/components/ui/sonner";
+
+import appCss from "../styles.css?url";
+
+function NotFoundComponent() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="font-serif text-7xl font-bold text-navy">404</h1>
+        <h2 className="mt-4 font-serif text-2xl text-foreground">Page not found</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-navy px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-navy-light"
+          >
+            Return Home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Ghadei & Associates | Chartered Accountants — Tax, Audit & Advisory" },
+      { name: "description", content: "Premier chartered accountant firm offering expert tax advisory, GST compliance, statutory audit, and corporate advisory services across India." },
+      { name: "keywords", content: "chartered accountant services, CA firm India, tax advisory, GST compliance, statutory audit, Ghadei Associates" },
+      { name: "author", content: "Ghadei & Associates" },
+      { property: "og:title", content: "Ghadei & Associates | Chartered Accountants — Tax, Audit & Advisory" },
+      { property: "og:description", content: "Premier chartered accountant firm offering expert tax advisory, GST compliance, statutory audit, and corporate advisory services across India." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "Ghadei & Associates | Chartered Accountants — Tax, Audit & Advisory" },
+      { name: "twitter:description", content: "Premier chartered accountant firm offering expert tax advisory, GST compliance, statutory audit, and corporate advisory services across India." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cf080fd1-4a91-4efe-b84a-33a0ca6d8b95/id-preview-74a0f85c--c54c622d-2ea4-4238-a290-25b8473063e9.lovable.app-1777646219100.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cf080fd1-4a91-4efe-b84a-33a0ca6d8b95/id-preview-74a0f85c--c54c622d-2ea4-4238-a290-25b8473063e9.lovable.app-1777646219100.png" },
+    ],
+    links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" },
+      { rel: "stylesheet", href: appCss },
+    ],
+  }),
+  shellComponent: RootShell,
+  component: RootComponent,
+  notFoundComponent: NotFoundComponent,
+});
+
+function RootShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+function RootComponent() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <DeadlineBanner />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <Footer />
+      <Toaster />
+    </div>
+  );
+}
